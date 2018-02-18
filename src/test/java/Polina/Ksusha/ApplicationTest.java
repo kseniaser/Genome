@@ -10,51 +10,55 @@ import java.util.Scanner;
 import static org.testng.Assert.*;
 
 public class ApplicationTest {
-    //    public MyGraph expectedGraph() {
-//        MyGraph graph = new MyGraph();
-//        graph.addNode("AA");
-//        graph.addNode("AB");
-//        graph.addNode("BB");
-//        graph.addNode("BA");
-//
-//        graph.addEdge("AAA");
-//        graph.addEdge("AAB");
-//        graph.addEdge("ABB");
-//        graph.addEdge("BBB");
-//        graph.addEdge("BBA");
-//        return graph;
-//    }
 
-//        private MyGraph testGraph = new MyGraph();
-//        @BeforeTest
-//        public void uploadGraphs (String args[]){
-//            try(Scanner in = new Scanner(new File(args[0]));) {
-//                while (in.hasNextLine()) {
-//                    String str = in.nextLine();
-//                        graph.addNode(a);
-//                        graph.addNode(b);
-//                        graph.addEdge(str);
-//
-//                    }
-//                }
-//            } catch (FileNotFoundException ex) {
-//                ex.printStackTrace();
-//            }
-//
-//        }
-//
-//
-//        @DataPovider
-//        public Object[][] graphs() {
-//        }
+    // [n - num of edges in expected, m - num of nodes, test.txt - list of n edges && m nodes]
 
+    private MyGraph curGraph = new MyGraph();
 
-        @Test
-        public void reader1() throws IOException {
-                //     MyGraph expected = new ApplicationTest().expectedGraph();
-                //   MyGraph actual = new MyReader().readGraph(args[0]) ;
-                //    assertTrue(actual.equal(expected));
-
+    private MyGraph uploadExpGraph(String testFile) {
+        MyGraph expG = new MyGraph();
+        int cnt = 0;
+        try (Scanner in = new Scanner(new File(testFile))) {
+            String ns = in.nextLine();
+            int n = Integer.parseInt(ns);
+            String ms = in.nextLine();
+            int m = Integer.parseInt(ms);
+            while (in.hasNextLine()) {
+                String str = in.nextLine();
+                if (cnt < n) expG.addEdge(str);
+                else expG.addNode(str);
+                cnt++;
             }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return expG;
+    }
+
+
+    private MyGraph uploadCurGraph(String curFile) {
+        MyGraph curG = new MyGraph();
+        try {
+            curG = MyReader.readGraph(curFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return curG;
+    }
+
+    @DataProvider
+    public Object[][] graphs() {
+            return new Object[][]{
+                    {uploadExpGraph("testRead.txt"), uploadCurGraph("kmers.txt") }
+            };
+    }
+
+
+
+    @Test(dataProvider = "graphs")
+    public void reader1(MyGraph expected, MyGraph actual) {
+        assertTrue(actual.equal(expected));
+
+    }
 
 }
