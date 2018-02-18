@@ -5,7 +5,7 @@ import java.util.*;
 import java.io.*;
 
 
-public class Reader {
+public class MyReader {
 
     public static MyGraph readGraph() throws IOException {
 
@@ -29,4 +29,3 @@ public class Reader {
     }
 
 }
-

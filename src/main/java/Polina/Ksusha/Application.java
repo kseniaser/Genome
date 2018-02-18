@@ -1,12 +1,10 @@
 package Polina.Ksusha;
 
-import java.io.*;
+import java.io.IOException;
 
-public class GraphDeBrujin {
-
+public class Application {
     public static void main(String args[]) throws IOException {
-        MyGraph graph = Reader.readGraph();
+        MyGraph graph = MyReader.readGraph();
         Visualization.visualizateGraph(graph);
     }
 }
-
