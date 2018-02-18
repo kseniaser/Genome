@@ -1,4 +1,5 @@
 import Polina.Ksusha.MyGraph;
+import Polina.Ksusha.MyReader;
 import org.junit.Assert;
 import org.junit.Test;
 import java.io.IOException;
@@ -26,6 +27,9 @@ public class ApplicationTest extends Assert {
 
     @Test
     public void reader1() throws IOException  {
+        MyGraph expected = new ApplicationTest().expectedGraph();
+        MyGraph actual = new MyReader().readGraph() ;
+        assertTrue(actual.equal(expected));
 
     }
 
