@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public class Application {
 
     public static void main(String args[]) throws IOException {
-        MyGraph graph = MyReader.readGraph() ;
+
+        MyGraph graph = MyReader.readGraph(args[0]) ;
         ArrayList<String> answer = EulerianPath.findEulerianPath(graph);
         String genome = "";
         for (String i :answer){
