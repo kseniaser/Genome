@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 public class EulerianPath {
 
-    public static ArrayList<String> findEulerianPath ( MyGraph graph) throws IOException {
+    public static ArrayList<String> findEulerianPath(MyGraph graph) {
         ArrayList<String> answer = new ArrayList<>();
         int count = graph.edges.size();
         Map<String, ArrayList<String>> adjMatrix = transformToMap(graph);
@@ -16,7 +16,7 @@ public class EulerianPath {
         return answer;
     }
 
-    public static ArrayList<String> findEulerianPath(String v, ArrayList<String> answer, int count, Map<String, ArrayList<String>> graph) throws IOException  {
+    public static ArrayList<String> findEulerianPath(String v, ArrayList<String> answer, int count, Map<String, ArrayList<String>> graph)  {
         if (answer.size() == count) {
             answer.add(v);
             return answer;
@@ -35,7 +35,7 @@ public class EulerianPath {
         return answer;
     }
 
-    public static String findStart (Map<String, ArrayList<String>> fromMatrix, Map<String, ArrayList<String>> toMatrix) throws IOException {
+    public static String findStart(Map<String, ArrayList<String>> fromMatrix, Map<String, ArrayList<String>> toMatrix) {
         for (Object obj : fromMatrix.entrySet()) {
             Entry entry = (Entry) obj;
             int fromSize = ((ArrayList<String>) entry.getValue()).size();
@@ -46,7 +46,7 @@ public class EulerianPath {
         return "";
     }
 
-    public static Map<String, ArrayList<String>> transformToMap (MyGraph inGraph) {
+    public static Map<String, ArrayList<String>> transformToMap(MyGraph inGraph) {
         Map<String, ArrayList<String>> graph = new HashMap<>();
         for (String temp: inGraph.edges){
             String from = temp.substring(0, temp.length() - 1);
@@ -69,7 +69,7 @@ public class EulerianPath {
     return graph;
     }
 
-    public static Map<String, ArrayList<String>> reverseToMap (MyGraph inGraph) {
+    public static Map<String, ArrayList<String>> reverseToMap(MyGraph inGraph) {
         Map<String, ArrayList<String>> graph = new HashMap<>();
         for (String temp: inGraph.edges){
             String from = temp.substring(0, temp.length() - 1);

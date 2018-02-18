@@ -7,9 +7,13 @@ import java.io.*;
 
 public class Visualization {
 
-    public static void visualizateGraph (MyGraph graph) throws IOException  {
+    public static void VisualizatePath(MyGraph graph, ArrayList<String> answer)  {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         Graph visualGraph = new SingleGraph("Polina");
+        visualGraph.addAttribute("ui.stylesheet", styleSheet);
+        visualGraph.setAutoCreate(true);
+        visualGraph.setStrict(false);
+        visualGraph.display();
         Iterator<String> tempn = graph.nodes.iterator();
         while (tempn.hasNext()){
             visualGraph.addNode(tempn.next());
@@ -23,6 +27,27 @@ public class Visualization {
             node.addAttribute("ui.label", node.getId());
             node.addAttribute("ui.style", "text-alignment: under;");
         }
-        visualGraph.display();
+
+        explore(visualGraph, answer);
     }
+
+    public static void explore(Graph visualGraph, ArrayList<String> answer) {
+        for (String i :answer){
+            visualGraph.getEdge(i).setAttribute("ui.class", "marked");
+            sleep();
+        }
+    }
+
+    protected static void sleep() {
+        try { Thread.sleep(1000); } catch (Exception e) {}
+    }
+
+    protected static String styleSheet =
+            "edge {" +
+                    "	fill-color: black;" +
+                    "}" +
+                    "edge.marked {" +
+                    "	fill-color: red;" +
+                    "}";
+
 }
