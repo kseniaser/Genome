@@ -5,11 +5,11 @@ import java.util.*;
 
 public class MyGraph {
 
-    Set <String> edges;
+    ArrayList <String> edges;
     Set <String> nodes;
 
     public MyGraph (){
-        edges = new HashSet<String>();
+        edges = new ArrayList<>();
         nodes = new HashSet <String>();
     }
 

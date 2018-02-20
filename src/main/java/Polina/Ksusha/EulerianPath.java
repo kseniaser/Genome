@@ -9,9 +9,9 @@ public class EulerianPath {
 
     public static ArrayList<String> findEulerianPath(MyGraph graph) {
         ArrayList<String> answer = new ArrayList<>();
-        int count = graph.edges.size();
         Map<String, ArrayList<String>> adjMatrix = transformToMap(graph);
         String startNode = findStart(adjMatrix, reverseToMap(graph));
+        int count = graph.edges.size();
         answer = findEulerianPath(startNode, answer, count, adjMatrix);
         return answer;
     }
@@ -39,7 +39,12 @@ public class EulerianPath {
         for (Object obj : fromMatrix.entrySet()) {
             Entry entry = (Entry) obj;
             int fromSize = ((ArrayList<String>) entry.getValue()).size();
-            int toSize = (toMatrix.get(entry.getKey())).size();
+            int toSize;
+            try{
+                toSize = (toMatrix.get(entry.getKey())).size();
+            } catch (NullPointerException nullPointer){
+                return (String) entry.getKey();
+            }
             if (fromSize - toSize > 0)
                 return (String) entry.getKey();
         }
