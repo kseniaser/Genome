@@ -15,7 +15,7 @@ public class Application {
         System.out.print(writeGenome(answer));
         Visualization.visualizatePath(answer);
     }
-    public static StringBuilder writeGenome ( ArrayList<String> answer) throws IOException {
+    public static StringBuilder writeGenome(ArrayList<String> answer) throws IOException {
         String a = answer.get(0);
         StringBuilder genome = new StringBuilder();
         genome.append(a.substring(0, a.length() - 1));
