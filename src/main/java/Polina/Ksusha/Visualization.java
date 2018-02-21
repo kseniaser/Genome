@@ -15,6 +15,7 @@ public class Visualization {
         visualGraph.setStrict(false);
         visualGraph.display();
         visualGraph.addNode(answer.get(0));
+        int speed;
         for(int i=1; i<answer.size(); i++){
             visualGraph.addNode(answer.get(i));
             visualGraph.addEdge(Integer.toString(i),answer.get(i-1),answer.get(i),true);
@@ -23,21 +24,32 @@ public class Visualization {
             node.addAttribute("ui.label", node.getId());
             node.addAttribute("ui.style", "text-alignment: under;");
         }
-        sleep();
-        explore(visualGraph, answer);
+        if (answer.size()>50) {
+            for (Node node : visualGraph) {
+                //needs if number of nodes >50
+                node.setAttribute("x", 1);
+                node.setAttribute("y", 3);
+            }
+            sleep(10000);
+            speed =10;
+        } else {
+            sleep(5000);
+            speed = 1000;
+        }
+        explore(visualGraph, answer, speed);
     }
 
-    public static void explore(Graph visualGraph, ArrayList<String> answer) {
+    public static void explore(Graph visualGraph, ArrayList<String> answer, int speed) {
         visualGraph.getNode(answer.get(0)).setAttribute("ui.class", "marked");
         for(int i=1; i<answer.size(); i++){
             visualGraph.getEdge(Integer.toString(i)).setAttribute("ui.class", "marked");
             visualGraph.getNode(answer.get(i)).setAttribute("ui.class", "marked");
-            sleep();
+            sleep(speed);
         }
     }
 
-    protected static void sleep() {
-        try { Thread.sleep(10); } catch (Exception e) {}
+    protected static void sleep(int speed) {
+        try { Thread.sleep(speed); } catch (Exception e) {}
     }
 
     protected static String styleSheet =
