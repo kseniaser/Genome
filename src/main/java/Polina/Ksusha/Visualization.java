@@ -7,46 +7,47 @@ import java.io.*;
 
 public class Visualization {
 
-    public static void VisualizatePath(MyGraph graph, ArrayList<String> answer)  {
+    public static void visualizatePath(ArrayList<String> answer)  {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-        Graph visualGraph = new SingleGraph("Polina");
+        Graph visualGraph = new MultiGraph("Polina");
         visualGraph.addAttribute("ui.stylesheet", styleSheet);
         visualGraph.setAutoCreate(true);
         visualGraph.setStrict(false);
         visualGraph.display();
-        Iterator<String> tempn = graph.nodes.iterator();
-        while (tempn.hasNext()){
-            visualGraph.addNode(tempn.next());
-        }
-        Iterator<String> tempe = graph.edges.iterator();
-        while (tempe.hasNext()){
-            String tempee = tempe.next();
-            visualGraph.addEdge(tempee, tempee.substring(0, tempee.length() - 1), tempee.substring(1), true);
+        visualGraph.addNode(answer.get(0));
+        for(int i=1; i<answer.size(); i++){
+            visualGraph.addNode(answer.get(i));
+            visualGraph.addEdge(Integer.toString(i),answer.get(i-1),answer.get(i),true);
         }
         for (Node node : visualGraph) {
             node.addAttribute("ui.label", node.getId());
             node.addAttribute("ui.style", "text-alignment: under;");
         }
-
+        sleep();
         explore(visualGraph, answer);
     }
 
     public static void explore(Graph visualGraph, ArrayList<String> answer) {
-        for (String i :answer){
-            visualGraph.getEdge(i).setAttribute("ui.class", "marked");
+        visualGraph.getNode(answer.get(0)).setAttribute("ui.class", "marked");
+        for(int i=1; i<answer.size(); i++){
+            visualGraph.getEdge(Integer.toString(i)).setAttribute("ui.class", "marked");
+            visualGraph.getNode(answer.get(i)).setAttribute("ui.class", "marked");
             sleep();
         }
     }
 
     protected static void sleep() {
-        try { Thread.sleep(1000); } catch (Exception e) {}
+        try { Thread.sleep(10); } catch (Exception e) {}
     }
 
     protected static String styleSheet =
-            "edge {" +
-                    "	fill-color: black;" +
+            "edge.marked {" +
+                    "	fill-color: red;" +
                     "}" +
-                    "edge.marked {" +
+                    "node{"+
+                    "size :5px;"+
+                    "}"+
+                    "node.marked {" +
                     "	fill-color: red;" +
                     "}";
 
