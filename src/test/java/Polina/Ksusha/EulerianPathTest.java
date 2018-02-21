@@ -9,8 +9,8 @@ import static org.testng.Assert.*;
 
 public class EulerianPathTest {
 
-    private String curAns(String fileName) {
-        String curAns = "";
+    private StringBuilder curAns(String fileName) {
+        StringBuilder curAns = new StringBuilder();
         try {
             curAns = Application.writeGenome(EulerianPath.findEulerianPath(MyReader.readGraph(fileName)));
         } catch (IOException e) {
@@ -22,7 +22,7 @@ public class EulerianPathTest {
     @DataProvider
     public Object[][] genomes() {
         return new Object[][]{
-                {"AAABBBAB", curAns("kmers.txt")}
+                {"AAABBBAB", curAns("kmers.txt").toString() }
         };
     }
 
