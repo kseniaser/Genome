@@ -1,6 +1,6 @@
 package Polina.Ksusha;
 
-import scala.util.parsing.combinator.testing.Str;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,6 +17,11 @@ public class Application {
 //        System.out.print(graph.edges.size());
 
         ArrayList<String> answer = EulerianPath.findEulerianPath(graph);
+
+//        for(String i: answer)
+//        {
+//            System.out.println(i);
+//        }
         System.out.print(writeGenome(answer));
 
 //        ArrayList<String> ans = new ArrayList<>();
@@ -24,7 +29,7 @@ public class Application {
 //            ans.add(i,answer.get(i)+answer.get(i+1).substring(1,2));
 //        }
 
-        //Visualization.VisualizatePath(graph, ans);
+//        Visualization.VisualizatePath(graph, answer);
     }
 
     public static String writeGenome ( ArrayList<String> answer) throws IOException {
