@@ -12,7 +12,10 @@ public class Application {
         MyGraph graph = MyReader.readGraph(args[0]) ;
         ArrayList<String> answer = EulerianPath.findEulerianPath(graph);
  //       System.out.print(answer);
-        System.out.print(writeGenome(answer));
+        StringBuilder finalAns = writeGenome(answer);
+        String veryFinalAns = finalAns.toString().replace('#', '\n');
+        veryFinalAns = veryFinalAns.replace('_',' ');
+        System.out.print(veryFinalAns);
         Visualization.visualizatePath(answer);
     }
     public static StringBuilder writeGenome(ArrayList<String> answer) throws IOException {
