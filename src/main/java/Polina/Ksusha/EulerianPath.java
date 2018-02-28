@@ -10,26 +10,42 @@ import java.util.Map.Entry;
 
 public class EulerianPath {
 
-
+    private static ArrayList<String> usedStart = new ArrayList<>();
     public static ArrayList<String> findEulerianPath(MyGraph graph) {
 
-        Stack<String> stack = new Stack<String>();
+
         Map<String, ArrayList<String>> adjMatrix = transformToMap(graph);
-        stack.push(findStart(graph));
         ArrayList<String> ans = new ArrayList<>();
         ArrayList<String> answer = new ArrayList<String>();
-        while (!stack.isEmpty()) {
-            String v = stack.peek();
-            if ((adjMatrix.get(v) != null) && adjMatrix.get(v).isEmpty()) {
-                ans.add(v);
-                stack.pop();
-            } else if (adjMatrix.get(v) != null) {
-                String cur = adjMatrix.get(v).get(0);
-                stack.push(cur);
-                adjMatrix.get(v).remove(cur);
-            }
+        findStart(graph);
+        while (!usedStart.isEmpty()) {
+            Stack<String> stack = new Stack<String>();
+            stack.push(usedStart.get(0));
+            boolean nextEdge = true;
+            while (!stack.isEmpty()) {
+                String v = stack.peek();
+                usedStart.remove(v);
+                if ((adjMatrix.get(v) != null) && adjMatrix.get(v).isEmpty()) {
+                    stack.pop();
+                    nextEdge = true;
 
-        };
+                } else if (adjMatrix.get(v) != null) {
+                    String cur = adjMatrix.get(v).get(0);
+                    if ((((cnt.get(cur)[0] == 1 || cnt.get(cur)[0] == 0)) && !ans.isEmpty()) && !nextEdge) {
+                        String mem = ans.get(ans.size() - 1);
+                        mem += cur.substring(cur.length() - 1, cur.length());
+                        ans.set(ans.size() - 1, mem);
+                    } else {
+                        ans.add(v.substring(0, v.length()) + cur.substring(cur.length() - 1, cur.length()));
+                        nextEdge = false;
+                    }
+                    stack.push(cur);
+                    adjMatrix.get(v).remove(cur);
+                }
+
+            }
+            ;
+        }
         int n = ans.size();
         for (int i = n - 1; i >= 0; i--) {
             answer.add(ans.get(i));
@@ -38,13 +54,16 @@ public class EulerianPath {
         return answer;
     }
 
+
+   // private static Map<String, Boolean> starters = new HashMap<>();
     private static Map<String, int[]> cnt = new HashMap<>(); //i = 0 исходящие, i = 1 входящие
-    public static String findStart(MyGraph graph) {
+    public static void findStart(MyGraph graph) {
         for (String s: graph.nodes){
             int buf[] = cnt.get(s);
-             if (buf[0] - buf[1] > 0) return s;
+             if (buf[0] - buf[1] > 0){
+                 usedStart.add(s);
+             }
         }
-        return "";
     }
 
 
