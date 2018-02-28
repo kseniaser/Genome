@@ -11,12 +11,14 @@ public class Application {
     public static void main(String args[]) throws IOException {
         MyGraph graph = MyReader.readGraph(args[0]) ;
         ArrayList<String> answer = EulerianPath.findEulerianPath(graph);
- //       System.out.print(answer);
+    //    System.out.print(answer);
         StringBuilder finalAns = writeGenome(answer);
-        String veryFinalAns = finalAns.toString().replace('#', '\n');
-        veryFinalAns = veryFinalAns.replace('_',' ');
-        System.out.print(veryFinalAns);
+     //   String veryFinalAns = finalAns.toString().replace('#', '\n');
+     //   veryFinalAns = veryFinalAns.replace('_',' ');
+        System.out.print(finalAns);
         Visualization.visualizatePath(answer);
+ //       System.out.print(graph.edges);
+
     }
     public static StringBuilder writeGenome(ArrayList<String> answer) throws IOException {
         String a = answer.get(0);
